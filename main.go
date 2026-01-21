@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/prasan/db-go/approaches/naive"
 	"log"
+	"github.com/prasan/db-go/approaches/naive"
 )
 
 func main() {
