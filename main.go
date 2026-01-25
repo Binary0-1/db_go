@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+
 	"github.com/prasan/db-go/approaches/naive"
 )
 
@@ -24,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 
 	if err != nil {
 		log.Fatal(err)
