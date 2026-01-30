@@ -6,7 +6,7 @@ import (
 
 func assert(cond bool) {
 	if !cond {
-		panic("assertion Failed testing changes")
+		panic("assertion Failed ")
 	}
 }
 
@@ -53,24 +53,23 @@ func (node Bnode) setHeader(btype uint16, nkeys uint16){
 
 
 //Pointer 
-func (node Bnode) getPtr(idx unint16) uint64{
-	assert(idx < node.nkeys())
+func (node Bnode) getPtr(idx uint16) uint64{
+	assert(idx < node.nKeys())
 	pos := HEADER + 8 * idx
-	return binary.LittleEndian.uint64(node.data[pos:])
+	return binary.LittleEndian.Uint64(node.data[pos:])
 }
 
-func (node Bnode) setPtr(idx uint16, val unit64){
-	assert(idx < node.nkeys()){
+func (node Bnode) setPtr(idx uint16, val uint64){
+	assert(idx < node.nKeys())
 		pos := HEADER + 8 * idx
-		binary.LittleEndian.PutUint16(node.data[pos:], val)
-	}
+		binary.LittleEndian.PutUint64(node.data[pos:], val)
 }
 
 
 // offset list
 func offsetPos(node Bnode, idx uint16) uint16{
 	assert(1 <= idx && idx <= node.nKeys())
-	return HEADER + 8*node.nkeys() + 2*(idx - 1)
+	return HEADER + 8*node.nKeys() + 2*(idx - 1)
 }
 
 func (node Bnode) getOffset(idx uint16) uint16{
@@ -87,7 +86,7 @@ func (node Bnode) setOffset(idx uint16, offset uint16){
 
 //key values
 func (node Bnode) kvPos(idx uint16) uint16{
-	assert(idx <= node.nkeys())
+	assert(idx <= node.nKeys())
 	return HEADER + 8 * node.nKeys() + 2*node.nKeys() + node.getOffset(idx)
 }
 
@@ -99,7 +98,7 @@ func (node Bnode) getKey(idx uint16) []byte{
 	return node.data[pos + 4:][:kLen]
 }
 
-func (node Bnode) getKey(idx uint16) []byte{
+func (node Bnode) getVal(idx uint16) []byte{
 	assert(idx <= node.nKeys())
 	pos := node.kvPos(idx)
 	kLen := binary.LittleEndian.Uint16(node.data[pos:])
@@ -107,7 +106,8 @@ func (node Bnode) getKey(idx uint16) []byte{
 	return node.data[pos + 4+ kLen :][:vLen]
 }
 // node size in bytes
-func (node Bnode) nbytes() nint16{
+
+func (node Bnode) nbytes() uint16{
 	return node.kvPos(node.nKeys())
 }
 
