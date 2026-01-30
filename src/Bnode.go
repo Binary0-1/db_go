@@ -1,9 +1,9 @@
-package btree
+package Bnode
 
 import (
 	"encoding/binary"
 )
-z
+
 func assert(cond bool) {
 	if !cond {
 		panic("assertion Failed")
@@ -86,7 +86,6 @@ func (node Bnode) setOffset(idx uint16, offset uint16){
 
 
 //key values
-
 func (node Bnode) kvPos(idx uint16) uint16{
 	assert(idx <= node.nkeys())
 	return HEADER + 8 * node.nKeys() + 2*node.nKeys() + node.getOffset(idx)
