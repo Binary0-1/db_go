@@ -6,7 +6,7 @@ import (
 
 func assert(cond bool) {
 	if !cond {
-		panic("assertion Failed")
+		panic("assertion Failed testing changes")
 	}
 }
 
